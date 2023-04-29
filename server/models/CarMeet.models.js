@@ -14,7 +14,7 @@ const CarMeetSchema = new Schema(
     attendance: {
       users: [{ type: Schema.Types.ObjectId, ref: "Account" }],
     },
-    host: { type: Schema.Types.ObjectId, ref: "Account" },
+    host: { type: Schema.Types.ObjectId, ref: "Account", required: true },
   },
   { timestamps: true }
 );
