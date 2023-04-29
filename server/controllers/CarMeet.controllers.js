@@ -25,6 +25,8 @@ module.exports = {
   get_recent: async (req, res) => {
     CarMeet.find()
       .populate({ path: "host", select: "username" })
+      .sort({ createdAt: -1 })
+      .limit(10)
       .then((meets) => res.status(200).json(meets))
       .catch((err) => res.status(400).json(err));
   },

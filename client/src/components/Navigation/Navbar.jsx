@@ -26,6 +26,7 @@ const Navbar = () => {
       <div className='flex gap-5'>
         {currentUser ? (
           <>
+            <Link to='/carclubs/'>All Clubs</Link>
             <Link to='/carmeets/create'>Create Meet</Link>
           </>
         ) : (
