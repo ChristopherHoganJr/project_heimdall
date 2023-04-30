@@ -1,8 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ClubPreview = ({ club }) => {
   return (
-    <div className='border-2 border-black p-3 rounded-md'>
+    <Link
+      to={`/carclubs/${club._id}`}
+      className='border-2 border-black p-3 rounded-md'>
       <p>{club.name}</p>
       <p>{club.about}</p>
       <div>
@@ -13,8 +16,8 @@ const ClubPreview = ({ club }) => {
           ))}
         </div>
       </div>
-      <p>President: {club.president}</p>
-    </div>
+      <p>President: {club.president.username}</p>
+    </Link>
   );
 };
 

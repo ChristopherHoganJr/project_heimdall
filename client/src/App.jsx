@@ -19,10 +19,12 @@ import Register from "./pages/account/Register";
 import MainWall from "./pages/car_meets/MainWall";
 import CreateMeet from "./pages/car_meets/CreateMeet";
 import EditMeet from "./pages/car_meets/EditMeet";
+import SingleMeet from "./pages/car_meets/SingleMeet";
 
 // pages -- car clubs
 import CarClubWall from "./pages/car_clubs/CarClubWall";
 import CreateClub from "./pages/car_clubs/CreateClub";
+import SingleClub from "./pages/car_clubs/SingleClub";
 
 axios.defaults.baseURL = "http://localhost:8000";
 
@@ -44,9 +46,11 @@ function App() {
           {/* Car Meet Paths */}
           <Route path={"/carmeets/create"} element={<CreateMeet />} />
           <Route path={"/carmeets/edit/:meet_id"} element={<EditMeet />} />
+          <Route path={"/carmeets/:meet_id"} element={<SingleMeet />} />
           {/* Car Club Paths */}
           <Route path={"/carclubs/"} element={<CarClubWall />} />
           <Route path={"/carclubs/create"} element={<CreateClub />} />
+          <Route path={"/carclubs/:club_id"} element={<SingleClub />} />
         </Routes>
       </main>
     </>

@@ -5,7 +5,7 @@ import axios from "axios";
 import { UserContext } from "../../contexts/UserContext";
 
 // components
-import MeetPreview from "./MeetPreview";
+import MeetPreview from "../../components/car_meets/MeetPreview";
 
 const MainWall = () => {
   const { currentUser } = useContext(UserContext);
@@ -24,11 +24,10 @@ const MainWall = () => {
         {meets?.map((e, i) => (
           <MeetPreview
             key={i}
-            meet_id={e._id}
-            title={e.title}
-            about={e.about}
-            host={e.host}
+            meet={e}
             currentUser={currentUser}
+            setMeets={setMeets}
+            meets={meets}
           />
         ))}
       </div>

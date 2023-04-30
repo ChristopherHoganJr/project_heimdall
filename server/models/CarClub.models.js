@@ -20,7 +20,6 @@ const CarClubSchema = new Schema(
       users: [{ type: Schema.Types.ObjectId, ref: "Account" }],
     },
     president: { type: Schema.Types.ObjectId, ref: "Account", required: true },
-    vicePresident: { type: Schema.Types.ObjectId, ref: "Account" },
   },
   { timestamps: true }
 );

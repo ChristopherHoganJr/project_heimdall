@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 // components
-import ClubPreview from "./ClubPreview";
+import ClubPreview from "../../components/car_clubs/ClubPreview";
 
 const CarClubWall = () => {
   const [clubs, setClubs] = useState([]);

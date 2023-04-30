@@ -95,6 +95,7 @@ module.exports = {
         .then((user) => {
           res.status(200).json({
             username: user.username,
+            id: user._id,
           });
         })
         .catch((error) => res.status(400).json({ errors: "please log in" }));

@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   get_clubs: async (req, res) => {
     CarClub.find()
+      .populate({ path: "president", select: "username" })
       .sort({ createdAt: -1 })
       .then((clubs) => res.status(200).json(clubs))
       .catch((err) => console.log(err));
@@ -26,5 +27,11 @@ module.exports = {
     } else {
       res.status(200).json({ error: "please log in" });
     }
+  },
+  get_single_club: async (req, res) => {
+    (await CarClub.findById(req.params.club_id))
+      .populate({ path: "president", select: "username" })
+      .then((club) => res.status(200).json(club))
+      .catch((err) => res.status(400).json(err));
   },
 };
