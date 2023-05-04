@@ -28,6 +28,15 @@ const AccountSchema = Schema(
           "your password must at least 8 characters long, have at least 1 lower case letter, 1 upper case letters, 1 number, and 1 special character",
       },
     },
+    image: {
+      type: String,
+    },
+    realName: {
+      type: String,
+    },
+    biography: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

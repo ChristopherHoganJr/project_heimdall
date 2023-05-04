@@ -12,23 +12,35 @@ module.exports = {
           host: user._id,
           about: req.body.about,
           title: req.body.title,
+          date: req.body.date,
+          time: req.body.time,
+          location: req.body.location,
+          locationLink: req.body.locationLink,
+          image: req.body.image,
           attendance: {
             users: user._id,
           },
-        }).then((post) => res.status(200).json(post));
+        })
+          .then((meet) => res.status(200).json(meet))
+          .catch((error) => res.status(400).json(error));
       })
-
       .catch((error) => res.status(400).json({ errors: "please log in" }));
   },
   get_meet: async (req, res) => {
     (await CarMeet.findById(req.params.meet_id))
-      .populate({ path: "host", select: ["username", "_id"] })
+      .populate([
+        { path: "host", select: ["username", "_id"] },
+        { path: "attendance.users", select: ["username", "image"] },
+      ])
       .then((meet) => res.status(200).json(meet))
       .catch((err) => console.log(err));
   },
   get_recent: async (req, res) => {
     CarMeet.find()
-      .populate({ path: "host", select: "username" })
+      .populate([
+        { path: "host", select: ["username", "_id"] },
+        { path: "attendance.users", select: ["username", "image"] },
+      ])
       .sort({ createdAt: -1 })
       .limit(10)
       .then((meets) => res.status(200).json(meets))
@@ -43,8 +55,14 @@ module.exports = {
       CarMeet.findByIdAndUpdate(
         meet._id,
         {
-          title: req.body.title,
+          host: user._id,
           about: req.body.about,
+          title: req.body.title,
+          date: req.body.date,
+          time: req.body.time,
+          location: req.body.location,
+          locationLink: req.body.locationLink,
+          image: req.body.image,
         },
         {
           new: true,
@@ -59,7 +77,7 @@ module.exports = {
   },
   attend_meet: async (req, res) => {
     let decoded = jwt.verify(req.cookies.usertoken, process.env.SECRET_KEY);
-    let user = await Account.findById(decoded.id);
+    let user = await Account.findById(decoded.id).select(["username", "image"]);
     if (user) {
       await CarMeet.findById(req.params.meet_id)
         .then((meet) => {
@@ -76,7 +94,7 @@ module.exports = {
                 runValidators: true,
               }
             )
-              .then((updatedMeet) => res.status(200).json(user._id))
+              .then((updatedMeet) => res.status(200).json(user))
               .catch((err) => console.log(err));
           }
         })
@@ -85,7 +103,7 @@ module.exports = {
   },
   decline_meet: async (req, res) => {
     let decoded = jwt.verify(req.cookies.usertoken, process.env.SECRET_KEY);
-    let user = await Account.findById(decoded.id);
+    let user = await Account.findById(decoded.id).select(["username", "image"]);
 
     if (user) {
       await CarMeet.findById(req.params.meet_id)
@@ -107,7 +125,7 @@ module.exports = {
                 runValidators: true,
               }
             )
-              .then((updatedMeet) => res.status(200).json(user._id))
+              .then((updatedMeet) => res.status(200).json(user))
               .catch((err) => console.log(err));
           }
         })
@@ -127,5 +145,23 @@ module.exports = {
         }
       });
     }
+  },
+  user_meets: async (req, res) => {
+    const user = await Account.find({ username: req.params.username });
+    const user_id = String(user[0]._id);
+    await CarMeet.find({
+      "attendance.users": user_id,
+    })
+      .populate([
+        { path: "host", select: ["username", "_id"] },
+        { path: "attendance.users", select: ["username", "image"] },
+      ])
+      .sort({ createdAt: -1 })
+      .then((meets) => {
+        console.log(user_id);
+        console.log("we made it here");
+        res.status(200).json(meets);
+      })
+      .catch((err) => console.log(err));
   },
 };

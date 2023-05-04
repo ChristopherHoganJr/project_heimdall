@@ -1,8 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
+// contexts
+import { UserContext } from "../../contexts/UserContext";
+
+// components
+import UserPreview from "../../components/shared/UserPreview";
+import DeleteButton from "../../components/car_clubs/DeleteButton";
+import JoinButton from "../../components/car_clubs/JoinButton";
+import LeaveButton from "../../components/car_clubs/LeaveButton";
 
 const SingleClub = () => {
+  const { currentUser } = useContext(UserContext);
   const { club_id } = useParams();
   const [club, setClub] = useState({});
 
@@ -15,25 +26,80 @@ const SingleClub = () => {
 
   console.log(club);
 
+  const leaveClub = (e) => {
+    e.preventDefault();
+    axios
+      .put(`/api/carclub/leave/${club._id}`, club, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        club.members.users = club.members.users.filter(
+          (user) => user._id !== res.data._id
+        );
+        setClub({ ...club });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const joinClub = (e) => {
+    e.preventDefault();
+    axios
+      .put(`/api/carclub/join/${club._id}`, club, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        club.members.users = [...club.members.users, res.data];
+        setClub({ ...club });
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
-      <h1>{club?.name}</h1>
-      <h4>Club President: {club?.president?.username}</h4>
-      <div>
-        <h2>About {club?.name}</h2>
-        <p>{club?.about}</p>
-      </div>
-      <div className='flex flex-wrap gap-2'>
-        <h3>Club Type:</h3>
+      <h1 className='font-bold text-3xl'>{club?.name}</h1>
+      <h4 className='font-semibold text-md'>
+        Club President:{" "}
+        <Link to={`/user/${club?.president?.username}`} className='underline'>
+          {club?.president?.username}
+        </Link>
+      </h4>
+      {club?.image && <img src={`http://localhost:8000/${club?.image}`} />}
+
+      <div className='flex flex-wrap gap-2 justify-center'>
         {club?.tags?.map((e, i) => (
-          <p key={i}>{e}</p>
+          <p key={i} className='py-1 px-2 rounded-full border-2 border-black'>
+            {e}
+          </p>
         ))}
       </div>
+      <div className='rounded-md'>
+        <h2 className='font-semibold text-2xl'>About {club?.name}</h2>
+        <p>{club?.about}</p>
+      </div>
+
       <div>
-        <h5>Club Members: {club?.members?.users?.length}</h5>
-        <div>
+        <h5 className='font-semibold text-2xl'>
+          Total: Club Members: {club?.members?.users?.length}
+        </h5>
+        <div className='flex gap-3 my-2'>
+          {currentUser?.id === club?.president?._id ? (
+            <>
+              <Link to={`/carclubs/edit/${club?._id}`} className='btn btn-edit'>
+                Edit Club
+              </Link>
+              <DeleteButton />
+            </>
+          ) : club?.members?.users.find(
+              (user) => user["_id"] === currentUser?.id
+            ) ? (
+            <LeaveButton leaveClub={leaveClub} />
+          ) : (
+            <JoinButton joinClub={joinClub} />
+          )}
+        </div>
+        <div className='grid grid-cols-3 gap-3 '>
           {club?.members?.users?.map((e, i) => (
-            <p>{e?.username}</p>
+            <UserPreview user={e} key={i} />
           ))}
         </div>
       </div>

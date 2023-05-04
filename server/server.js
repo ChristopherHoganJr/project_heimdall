@@ -17,10 +17,15 @@ app.use(
   })
 );
 
+app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(__dirname + "/uploads"));
+
 // routes
 require("./routes/Account.routes")(app);
 require("./routes/CarMeet.routes")(app);
 require("./routes/CarClub.routes")(app);
+// require("./routes/UserProfile.routes")(app);
+require("./routes/Upload.routes")(app);
 
 PORT = 8000;
 app.listen(PORT, () => {

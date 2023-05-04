@@ -8,6 +8,10 @@ const CarClubSchema = new Schema(
       required: [true, "your club must have a name"],
       unique: true,
     },
+    image: {
+      type: String,
+      required: [true, "your car club must have a image"],
+    },
     about: {
       type: String,
       required: [true, "you must tell everyone about your car meet"],

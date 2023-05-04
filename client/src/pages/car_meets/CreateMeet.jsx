@@ -2,11 +2,19 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+// components
+import Form_imageUpload from "../../components/shared/Form_imageUpload";
+
 const CreateMeet = () => {
   const navigate = useNavigate();
   const [meet, setMeet] = useState({
     title: "",
     about: "",
+    date: "",
+    time: "",
+    location: "",
+    locationLink: "",
+    image: "",
   });
 
   const createMeet = (e) => {
@@ -19,30 +27,67 @@ const CreateMeet = () => {
   return (
     <>
       <h1>Create Meet Page</h1>
-      <form
-        action=''
-        className='flex flex-col gap-2'
-        onSubmit={(e) => createMeet(e)}>
-        <div className='flex flex-col gap-2'>
+      <form action='' className='form' onSubmit={(e) => createMeet(e)}>
+        <div className='form-section'>
           <label htmlFor=''>Meet Name: </label>
           <input
             type='text'
-            className='border-2 border-black w-full px-2 py-1 rounded-md'
+            className='form-input'
             placeholder='meet name'
             value={meet.title}
             onChange={(e) => setMeet({ ...meet, title: e.target.value })}
           />
         </div>
-        <div className='flex flex-col gap-2'>
+        {meet?.image && <img src={`http://localhost:8000/${meet?.image}`} />}
+        <Form_imageUpload formInfo={meet} setFormInfo={setMeet} />
+        <div className='form-section'>
           <label htmlFor=''>About Meet: </label>
           <textarea
             value={meet.about}
             onChange={(e) => setMeet({ ...meet, about: e.target.value })}
-            className='border-2 border-black w-full px-2 py-1 h-28 rounded-md'></textarea>
+            className='form-input textarea'></textarea>
         </div>
-        <button className='border-2 border-black py-2 rounded-md mt-1'>
-          Post Meet
-        </button>
+        <div className='form-section'>
+          <label htmlFor=''>Meet Location</label>
+          <input
+            type='text'
+            className='form-input'
+            placeholder='Google Maps URL'
+            value={meet.location}
+            onChange={(e) => setMeet({ ...meet, location: e.target.value })}
+          />
+        </div>
+        <div className='form-section'>
+          <label htmlFor=''>Meet Location Link</label>
+          <input
+            type='text'
+            className='form-input'
+            placeholder='Google Maps URL'
+            value={meet.locationLink}
+            onChange={(e) => setMeet({ ...meet, locationLink: e.target.value })}
+          />
+        </div>
+        <div className='form-section'>
+          <label htmlFor=''>Date: ex: May 4th, 2023</label>
+          <input
+            type='text'
+            className='form-input'
+            placeholder='meet date'
+            value={meet.date}
+            onChange={(e) => setMeet({ ...meet, date: e.target.value })}
+          />
+        </div>
+        <div className='form-section'>
+          <label htmlFor=''>Start and End Time: ex: 8pm - 10pm</label>
+          <input
+            type='text'
+            className='form-input'
+            placeholder='meet time'
+            value={meet.time}
+            onChange={(e) => setMeet({ ...meet, time: e.target.value })}
+          />
+        </div>
+        <button className='btn btn-submit'>Post Meet</button>
       </form>
     </>
   );

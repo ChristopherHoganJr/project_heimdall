@@ -25,6 +25,12 @@ import SingleMeet from "./pages/car_meets/SingleMeet";
 import CarClubWall from "./pages/car_clubs/CarClubWall";
 import CreateClub from "./pages/car_clubs/CreateClub";
 import SingleClub from "./pages/car_clubs/SingleClub";
+import EditClub from "./pages/car_clubs/EditClub";
+
+// pages -- user
+import UserClubs from "./pages/user/UserClubs";
+import UserMeets from "./pages/user/UserMeets";
+import UserProfile from "./pages/user/UserProfile";
 
 axios.defaults.baseURL = "http://localhost:8000";
 
@@ -33,7 +39,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <main className='p-2'>
+      <main className='p-2 flex flex-col gap-2'>
         <Routes>
           {currentUser ? (
             <Route path={"/"} element={<MainWall />} />
@@ -51,6 +57,11 @@ function App() {
           <Route path={"/carclubs/"} element={<CarClubWall />} />
           <Route path={"/carclubs/create"} element={<CreateClub />} />
           <Route path={"/carclubs/:club_id"} element={<SingleClub />} />
+          <Route path={"/carclubs/edit/:club_id"} element={<EditClub />} />
+          {/* User Paths */}
+          <Route path={"/user/:username"} element={<UserProfile />} />
+          <Route path={"/user/:username/carclubs"} element={<UserClubs />} />
+          <Route path={"/user/:username/carmeets"} element={<UserMeets />} />
         </Routes>
       </main>
     </>

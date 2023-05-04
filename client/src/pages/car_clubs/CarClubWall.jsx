@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+
+// context
+import { UserContext } from "../../contexts/UserContext";
 
 // components
 import ClubPreview from "../../components/car_clubs/ClubPreview";
 
 const CarClubWall = () => {
   const [clubs, setClubs] = useState([]);
+  const { currentUser } = useContext(UserContext);
 
   useEffect(() => {
     axios
@@ -15,18 +19,23 @@ const CarClubWall = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  console.log(clubs);
+
   return (
     <>
       <h1>Car Club Wall</h1>
-      <div className='flex justify-end my-2'>
-        <Link
-          to={"/carclubs/create"}
-          className='py-2 px-6 border-2 border-blue-500 rounded-md'>
-          Create Club
-        </Link>
-      </div>
+
       <div className='flex flex-col gap-3'>
-        {clubs && clubs?.map((e, i) => <ClubPreview key={i} club={e} />)}
+        {clubs &&
+          clubs?.map((e, i) => (
+            <ClubPreview
+              key={i}
+              setClubs={setClubs}
+              club={e}
+              clubs={clubs}
+              currentUser={currentUser}
+            />
+          ))}
       </div>
     </>
   );

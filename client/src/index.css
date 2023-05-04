@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* buttons */
+.btn {
+  @apply py-2 px-6 border-2 rounded-md;
+}
+.btn-delete {
+  @apply border-red-700 bg-red-200;
+}
+.btn-positive {
+  @apply border-green-700 bg-green-200;
+}
+.btn-edit {
+  @apply border-yellow-700 bg-yellow-200;
+}
+.btn-view {
+  @apply border-black;
+}
+.btn-submit {
+  @apply border-green-700 bg-green-200;
+}
+
+/* Forms */
+.form {
+  @apply flex flex-col gap-2;
+}
+.form-section {
+  @apply flex flex-col gap-2;
+}
+.form-input {
+  @apply border-2 border-black w-full px-2 py-1 rounded-md;
+}
+.textarea {
+  @apply h-28;
+}

@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 // contexts
 import { UserContext } from "../../contexts/UserContext";
 
+// components
+import LogoutButton from "./LogoutButton";
+
 const Navbar = () => {
   const { currentUser } = useContext(UserContext);
   return (
@@ -26,6 +29,8 @@ const Navbar = () => {
       <div className='flex gap-5'>
         {currentUser ? (
           <>
+            <Link to={`/user/${currentUser.username}/carmeets`}>My Meets</Link>
+            <Link to={`/user/${currentUser.username}/carclubs`}>My Clubs</Link>
             <Link to='/carclubs/'>All Clubs</Link>
             <Link to='/carmeets/create'>Create Meet</Link>
             <Link to={`/user/${currentUser.username}`}>
@@ -43,6 +48,7 @@ const Navbar = () => {
                 />
               </svg>
             </Link>
+            <LogoutButton />
           </>
         ) : (
           <>

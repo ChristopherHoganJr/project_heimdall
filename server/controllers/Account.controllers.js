@@ -101,4 +101,23 @@ module.exports = {
         .catch((error) => res.status(400).json({ errors: "please log in" }));
     }
   },
+  logout: (req, res) => {
+    res.clearCookie("usertoken").sendStatus(200);
+  },
+  edit_profile: async (req, res) => {
+    let decoded = jwt.verify(req.cookies.usertoken, process.env.SECRET_KEY);
+    Account.findByIdAndUpdate(decoded.id, {
+      realName: req.body.realName,
+      biography: req.body.biography,
+      image: req.body.image,
+    })
+      .then((profile) => res.status(200).json(profile))
+      .catch((err) => console.log(err));
+  },
+  get_profile: async (req, res) => {
+    await Account.find({ username: req.params.username })
+      .select(["username", "realName", "biography", "image"])
+      .then((user) => res.status(200).json(user))
+      .catch((err) => console.log(err));
+  },
 };

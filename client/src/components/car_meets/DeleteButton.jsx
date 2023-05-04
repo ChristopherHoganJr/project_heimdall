@@ -12,7 +12,11 @@ const DeleteButton = ({ meet, setMeets, meets }) => {
       })
       .catch((err) => console.log(err));
   };
-  return <button onClick={(e) => deleteMeet(e)}>DeleteButton</button>;
+  return (
+    <button onClick={(e) => deleteMeet(e)} className='btn btn-delete'>
+      Delete Meet
+    </button>
+  );
 };
 
 export default DeleteButton;
