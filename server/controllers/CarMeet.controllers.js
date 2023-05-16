@@ -1,5 +1,6 @@
 const Account = require("../models/Account.models");
 const CarMeet = require("../models/CarMeet.models");
+const CarClub = require("../models/CarClub.models");
 
 const jwt = require("jsonwebtoken");
 
@@ -8,19 +9,22 @@ module.exports = {
     let decoded = jwt.verify(req.cookies.usertoken, process.env.SECRET_KEY);
     Account.findById(decoded.id)
       .then((user) => {
-        CarMeet.create({
-          host: user._id,
-          about: req.body.about,
-          title: req.body.title,
-          date: req.body.date,
-          time: req.body.time,
-          location: req.body.location,
-          locationLink: req.body.locationLink,
-          image: req.body.image,
-          attendance: {
-            users: user._id,
-          },
-        })
+        CarClub.findById(req.body.host)
+          .then((club) => {
+            CarMeet.create({
+              host: club._id,
+              about: req.body.about,
+              title: req.body.title,
+              date: req.body.date,
+              time: req.body.time,
+              location: req.body.location,
+              locationLink: req.body.locationLink,
+              image: req.body.image,
+              attendance: {
+                users: user._id,
+              },
+            });
+          })
           .then((meet) => res.status(200).json(meet))
           .catch((error) => res.status(400).json(error));
       })
@@ -29,7 +33,7 @@ module.exports = {
   get_meet: async (req, res) => {
     (await CarMeet.findById(req.params.meet_id))
       .populate([
-        { path: "host", select: ["username", "_id"] },
+        { path: "host", select: ["name", "_id", "president"] },
         { path: "attendance.users", select: ["username", "image"] },
       ])
       .then((meet) => res.status(200).json(meet))
@@ -38,7 +42,7 @@ module.exports = {
   get_recent: async (req, res) => {
     CarMeet.find()
       .populate([
-        { path: "host", select: ["username", "_id"] },
+        { path: "host", select: ["name", "_id", "president"] },
         { path: "attendance.users", select: ["username", "image"] },
       ])
       .sort({ createdAt: -1 })
@@ -153,12 +157,29 @@ module.exports = {
       "attendance.users": user_id,
     })
       .populate([
-        { path: "host", select: ["username", "_id"] },
+        { path: "host", select: ["name", "_id", "president"] },
         { path: "attendance.users", select: ["username", "image"] },
       ])
       .sort({ createdAt: -1 })
       .then((meets) => {
         console.log(user_id);
+        console.log("we made it here");
+        res.status(200).json(meets);
+      })
+      .catch((err) => console.log(err));
+  },
+  club_meets: async (req, res) => {
+    const club = await CarClub.findById(req.params.club_id);
+    const club_id = String(club._id);
+    await CarMeet.find({
+      host: club_id,
+    })
+      .populate([
+        { path: "host", select: ["name", "_id", "president"] },
+        { path: "attendance.users", select: ["username", "image"] },
+      ])
+      .sort({ createdAt: -1 })
+      .then((meets) => {
         console.log("we made it here");
         res.status(200).json(meets);
       })

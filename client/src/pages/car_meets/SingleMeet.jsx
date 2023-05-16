@@ -57,32 +57,36 @@ const SingleMeet = () => {
   return (
     <>
       <h1 className='font-bold text-3xl'>{meet?.title}</h1>
-      <h2 className='font-bold text-md'>Hosted By: {meet?.host?.username}</h2>
-      {meet?.image && <img src={`http://localhost:8000/${meet?.image}`} />}
+      <h2 className='font-bold text-md'>Hosted By: {meet?.host?.name}</h2>
+      <div className='flex flex-col md:grid md:grid-cols-2'>
+        <div>
+          {meet?.image && <img src={`http://localhost:8000/${meet?.image}`} />}
+        </div>
+        <div className='flex gap-2 flex-col pl-2'>
+          <p className=''>
+            <span className='font-semibold'>Date:</span> {meet?.date}
+          </p>
+          <p className=''>
+            <span className='font-semibold'>Time:</span> {meet?.time}
+          </p>
+          <div className=''>
+            <h3 className='font-semibold text-2xl'>About {meet?.title}</h3>
+            <p>{meet?.about}</p>
+          </div>
+        </div>
 
-      <div className='flex gap-2 justify-center'>
-        <p className='p-2 border-black rounded-md border-2'>
-          <span className='font-semibold'>Date:</span> {meet?.date}
-        </p>
-        <p className='p-2 border-black rounded-md border-2'>
-          <span className='font-semibold'>Time:</span> {meet?.time}
-        </p>
-      </div>
-      <div className=''>
-        <h3 className='font-semibold text-2xl'>About {meet?.title}</h3>
-        <p>{meet?.about}</p>
-      </div>
-      <div className=''>
-        <h3 className='font-semibold text-2xl'>
-          Location: <span className='font-medium'>{meet?.location}</span>
-        </h3>
-        <Link to={meet?.locationLink} className='underline text-blue-500'>
-          {meet?.locationLink}
-        </Link>
+        <div className=''>
+          <h3 className='font-semibold text-2xl'>
+            Location: <span className='font-medium'>{meet?.location}</span>
+          </h3>
+          <Link to={meet?.locationLink} className='underline text-blue-500'>
+            {meet?.locationLink}
+          </Link>
+        </div>
       </div>
 
       <div className='flex gap-2 flex-wrap'>
-        {currentUser?.username === meet?.host?.username ? (
+        {currentUser?.id === meet?.host?.president ? (
           <>
             <Link to={`/carmeets/edit/${meet?._id}`} className='btn btn-edit'>
               Edit Post
@@ -100,18 +104,20 @@ const SingleMeet = () => {
           </>
         )}
       </div>
-      <p>
-        {meet?.attendance?.users?.length}{" "}
-        {meet?.attendance?.users?.length > 1 ||
-        meet?.attendance?.users?.length === 0
-          ? "people are"
-          : "person is"}{" "}
-        attending the meet.
-      </p>
-      <div className='grid grid-cols-3 gap-3 '>
-        {meet?.attendance?.users?.map((e, i) => (
-          <UserPreview user={e} key={i} />
-        ))}
+      <div className='border-2 border-black p-2 rounded-md'>
+        <p>
+          {meet?.attendance?.users?.length}{" "}
+          {meet?.attendance?.users?.length > 1 ||
+          meet?.attendance?.users?.length === 0
+            ? "people are"
+            : "person is"}{" "}
+          attending the meet.
+        </p>
+        <div className='flex flex-wrap gap-2 mt-2'>
+          {meet?.attendance?.users?.map((e, i) => (
+            <UserPreview user={e} key={i} />
+          ))}
+        </div>
       </div>
     </>
   );

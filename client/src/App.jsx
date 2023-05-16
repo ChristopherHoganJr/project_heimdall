@@ -39,7 +39,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <main className='p-2 flex flex-col gap-2'>
+      <main className='p-2 flex flex-col gap-2 max-w-7xl mx-auto'>
         <Routes>
           {currentUser ? (
             <Route path={"/"} element={<MainWall />} />
@@ -50,7 +50,7 @@ function App() {
           <Route path={"/login"} element={<Login />} />
           <Route path={"/register"} element={<Register />} />
           {/* Car Meet Paths */}
-          <Route path={"/carmeets/create"} element={<CreateMeet />} />
+          <Route path={"/carmeets/create/:club_id"} element={<CreateMeet />} />
           <Route path={"/carmeets/edit/:meet_id"} element={<EditMeet />} />
           <Route path={"/carmeets/:meet_id"} element={<SingleMeet />} />
           {/* Car Club Paths */}

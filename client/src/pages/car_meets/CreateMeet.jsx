@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // components
 import Form_imageUpload from "../../components/shared/Form_imageUpload";
 
 const CreateMeet = () => {
+  const { club_id } = useParams();
   const navigate = useNavigate();
   const [meet, setMeet] = useState({
+    host: club_id,
     title: "",
     about: "",
     date: "",

@@ -25,7 +25,7 @@ const CarClubWall = () => {
     <>
       <h1>Car Club Wall</h1>
 
-      <div className='flex flex-col gap-3'>
+      <div className='flex flex-col gap-3 md:flex-row'>
         {clubs &&
           clubs?.map((e, i) => (
             <ClubPreview
