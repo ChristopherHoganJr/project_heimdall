@@ -32,7 +32,7 @@ const Navbar = () => {
             <Link to={`/user/${currentUser.username}/carmeets`}>My Meets</Link>
             <Link to={`/user/${currentUser.username}/carclubs`}>My Clubs</Link>
             <Link to='/carclubs/'>All Clubs</Link>
-            <Link to='/carmeets/create'>Create Meet</Link>
+            <Link to='/carmeets/'>All Meets</Link>
             <Link to={`/user/${currentUser.username}`}>
               <svg
                 xmlns='http://www.w3.org/2000/svg'

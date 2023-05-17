@@ -35,7 +35,7 @@ const UserClubs = () => {
           Create Club
         </Link>
       </div>
-      <div className='flex flex-col gap-3'>
+      <div className='item-container'>
         {userClubs?.map((e, i) => (
           <ClubPreview
             key={i}

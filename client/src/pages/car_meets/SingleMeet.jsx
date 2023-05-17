@@ -59,7 +59,7 @@ const SingleMeet = () => {
       <h1 className='font-bold text-3xl'>{meet?.title}</h1>
       <h2 className='font-bold text-md'>Hosted By: {meet?.host?.name}</h2>
       <div className='flex flex-col md:grid md:grid-cols-2'>
-        <div>
+        <div styl>
           {meet?.image && <img src={`http://localhost:8000/${meet?.image}`} />}
         </div>
         <div className='flex gap-2 flex-col pl-2'>
@@ -73,37 +73,38 @@ const SingleMeet = () => {
             <h3 className='font-semibold text-2xl'>About {meet?.title}</h3>
             <p>{meet?.about}</p>
           </div>
-        </div>
-
-        <div className=''>
-          <h3 className='font-semibold text-2xl'>
-            Location: <span className='font-medium'>{meet?.location}</span>
-          </h3>
-          <Link to={meet?.locationLink} className='underline text-blue-500'>
-            {meet?.locationLink}
-          </Link>
-        </div>
-      </div>
-
-      <div className='flex gap-2 flex-wrap'>
-        {currentUser?.id === meet?.host?.president ? (
-          <>
-            <Link to={`/carmeets/edit/${meet?._id}`} className='btn btn-edit'>
-              Edit Post
+          <div className=''>
+            <h3 className='font-semibold text-2xl'>
+              Location: <span className='font-medium'>{meet?.location}</span>
+            </h3>
+            <Link to={meet?.locationLink} className='underline text-blue-500'>
+              {meet?.locationLink}
             </Link>
-          </>
-        ) : (
-          <>
-            {meet?.attendance?.users.find(
-              (user) => user["_id"] === currentUser?.id
-            ) ? (
-              <DeclineButton declineMeet={declineMeet} />
-            ) : (
-              <AttendButton attendMeet={attendMeet} />
-            )}
-          </>
-        )}
+            <div className='flex gap-2 flex-wrap'>
+              {currentUser?.id === meet?.host?.president ? (
+                <>
+                  <Link
+                    to={`/carmeets/edit/${meet?._id}`}
+                    className='btn btn-edit'>
+                    Edit Post
+                  </Link>
+                </>
+              ) : (
+                <>
+                  {meet?.attendance?.users.find(
+                    (user) => user["_id"] === currentUser?.id
+                  ) ? (
+                    <DeclineButton declineMeet={declineMeet} />
+                  ) : (
+                    <AttendButton attendMeet={attendMeet} />
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
+
       <div className='border-2 border-black p-2 rounded-md'>
         <p>
           {meet?.attendance?.users?.length}{" "}

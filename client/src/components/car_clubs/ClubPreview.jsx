@@ -64,11 +64,11 @@ const ClubPreview = ({ club, currentUser, setClubs, clubs }) => {
         />
       )}
       <p>{club?.about}</p>
-      <div className='flex gap-2 flex-wrap justify-center items-center py-2'>
-        <div className='flex gap-2'>
+      <div className='flex gap-2  justify-center items-center py-2'>
+        <div className='flex gap-2 flex-wrap justify-center'>
           {club?.tags?.map((e, i) => (
             <p
-              className='py-1 px-2 rounded-full border-2 border-black text-sm'
+              className='py-1 px-2 rounded-full text-center border-2 border-black text-sm'
               key={i}>
               {e}
             </p>

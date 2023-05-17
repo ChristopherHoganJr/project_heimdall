@@ -82,11 +82,8 @@ const MeetPreview = ({ meet, currentUser, setMeets, meets }) => {
             </>
           )}
         </div>
-        <div className='border-2 border-black p-2 rounded-md break-all'>
-          <h3>Location: {meet?.location}</h3>
-          <Link to={meet?.locationLink} className='underline text-blue-500'>
-            Maps Link
-          </Link>
+        <div className='border-2 border-black px-3 py-1 rounded-md break-normal overflow-y-scroll h-44'>
+          <p>{meet?.about}</p>
         </div>
       </div>
     </div>

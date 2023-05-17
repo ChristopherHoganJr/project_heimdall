@@ -34,7 +34,7 @@ const UserMeets = () => {
   return (
     <>
       <h1>Main Car Meet Wall</h1>
-      <div className=' flex flex-col gap-3'>
+      <div className='item-container'>
         {userMeets?.map((e, i) => (
           <MeetPreview
             key={i}

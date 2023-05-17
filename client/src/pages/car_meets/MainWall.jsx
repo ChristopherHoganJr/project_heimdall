@@ -21,7 +21,7 @@ const MainWall = () => {
   return (
     <>
       <h1 className='font-bold text-3xl'>Recently Posted Meets</h1>
-      <div className=' flex flex-col gap-3 sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+      <div className='item-container'>
         {meets?.map((e, i) => (
           <MeetPreview
             key={i}

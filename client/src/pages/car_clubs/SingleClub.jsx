@@ -19,7 +19,7 @@ const SingleClub = () => {
   const [club, setClub] = useState({});
   const [clubMeets, setClubMeets] = useState([]);
 
-  console.log(clubMeets);
+  console.log("club meets", clubMeets);
 
   useEffect(() => {
     axios
@@ -28,11 +28,11 @@ const SingleClub = () => {
       .catch((err) => console.log(err));
     axios
       .get(`/api/carclub/${club_id}/carmeets`)
-      .then((clubData) => setClub(clubData.data))
+      .then((clubData) => setClubMeets(clubData.data))
       .catch((err) => console.log(err));
   }, [club_id]);
 
-  console.log(club);
+  console.log("single club", club);
 
   const leaveClub = (e) => {
     e.preventDefault();

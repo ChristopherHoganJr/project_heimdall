@@ -35,3 +35,8 @@
 .textarea {
   @apply h-28;
 }
+
+/* Item Containers */
+.item-container {
+  @apply flex flex-col gap-3 sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
+}

@@ -13,7 +13,8 @@ const CreateMeet = () => {
     title: "",
     about: "",
     date: "",
-    time: "",
+    startTime: "",
+    endTime: "",
     location: "",
     locationLink: "",
     image: "",
@@ -69,26 +70,40 @@ const CreateMeet = () => {
             onChange={(e) => setMeet({ ...meet, locationLink: e.target.value })}
           />
         </div>
-        <div className='form-section'>
-          <label htmlFor=''>Date: ex: May 4th, 2023</label>
-          <input
-            type='text'
-            className='form-input'
-            placeholder='meet date'
-            value={meet.date}
-            onChange={(e) => setMeet({ ...meet, date: e.target.value })}
-          />
+        <div className='flex gap-2 justify-center'>
+          <div className='form-section'>
+            <label htmlFor=''>Date:</label>
+            <input
+              type='date'
+              className='form-input'
+              placeholder='meet date'
+              value={meet.date}
+              onChange={(e) => setMeet({ ...meet, date: e.target.value })}
+            />
+          </div>
+
+          <div className='form-section'>
+            <label htmlFor=''>Start Time:</label>
+            <input
+              type='time'
+              className='form-input'
+              placeholder=''
+              value={meet.startTime}
+              onChange={(e) => setMeet({ ...meet, startTime: e.target.value })}
+            />
+          </div>
+          <div className='form-section'>
+            <label htmlFor=''>End Time: </label>
+            <input
+              type='time'
+              className='form-input'
+              placeholder=''
+              value={meet.endTime}
+              onChange={(e) => setMeet({ ...meet, endTime: e.target.value })}
+            />
+          </div>
         </div>
-        <div className='form-section'>
-          <label htmlFor=''>Start and End Time: ex: 8pm - 10pm</label>
-          <input
-            type='text'
-            className='form-input'
-            placeholder='meet time'
-            value={meet.time}
-            onChange={(e) => setMeet({ ...meet, time: e.target.value })}
-          />
-        </div>
+
         <button className='btn btn-submit'>Post Meet</button>
       </form>
     </>

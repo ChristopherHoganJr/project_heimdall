@@ -50,6 +50,7 @@ function App() {
           <Route path={"/login"} element={<Login />} />
           <Route path={"/register"} element={<Register />} />
           {/* Car Meet Paths */}
+          <Route path={"/carmeets"} element={<MainWall />} />
           <Route path={"/carmeets/create/:club_id"} element={<CreateMeet />} />
           <Route path={"/carmeets/edit/:meet_id"} element={<EditMeet />} />
           <Route path={"/carmeets/:meet_id"} element={<SingleMeet />} />
